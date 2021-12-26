@@ -1,7 +1,7 @@
 # Depth-first Search
 
-# Adjacency Matrix: 2차원 배열로 그래프의 연결관계를 표현하는 방식
-# adjacency list 인접리스트 
+# Adjacency Matrix: 2차원 배열로 그래프의 연결관계를 표현하는 방식.
+# adjacency list: 리스트로 그래프의 연결관계를 표현하는 방식. 
 
 # 1. 인접행렬 방식: 2차원 리스트를 이용해 인접행렬 표현
 INF = float('inf') 
