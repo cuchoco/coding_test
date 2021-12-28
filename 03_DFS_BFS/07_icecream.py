@@ -3,7 +3,7 @@ def icecream(n,m, graph):
     # dfs로 특정한 노드를 방문한 뒤에 연결된 모든 노드들도 방
     def dfs(x,y):
         # 주어진 범위를 벗어나는 경우는 즉시 종료
-        if x <= -1 or x >=n or y <= -1 or y>= m:
+        if x <= -1 or x >= n or y <= -1 or y >= m:
             return False
         
         #현재 노드를 방문하지 않았다면
