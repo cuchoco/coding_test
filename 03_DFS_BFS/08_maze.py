@@ -10,6 +10,8 @@ def maze(n,m, map):
     def bfs(x,y):
         queue = deque()
         queue.append((x,y))
+        # li = []
+        # li.append((x,y))
 
         while queue:
             x, y = queue.popleft()
