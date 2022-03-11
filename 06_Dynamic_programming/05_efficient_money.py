@@ -15,7 +15,7 @@ def solution(N:list, M:int) -> int:
     for i in range(len(N)): 
         for j in range(N[i], M+1):
 
-            # N의 첫번째 화폐단위가 2인경우 2,4,6,8 금액 > 1,2,3,4 
+            # N의 첫번째 화폐단위가 2인경우 d[2],d[4],d[6],d[8] -> 1,2,3,4 
             d[j] = min(d[j], d[j-N[i]]+1)
 
    
