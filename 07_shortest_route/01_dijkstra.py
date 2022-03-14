@@ -68,3 +68,14 @@ def dijkstra(start):
             if cost < distance[j[0]]:     
                 distance[j[0]] = cost
 
+
+# 다익스트라 알고리즘 수행
+
+dijkstra(start)
+
+# 모든 노드로 가기 위한 최단거리
+for i in range(1, n+1):
+    if distance[i] == INF:
+        print("Inf")
+    else:
+        print(f'{i}번 노드로 가는 최소 비용:', distance[i])
