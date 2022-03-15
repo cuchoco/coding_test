@@ -13,7 +13,6 @@ m = 11     # 간선의 개수
 start = 1  # 시작 노드 번호
 
 graph = [[] for i in range(n+1)]  # 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트.
-visited = [False] * (n+1)
 
 # 최단 거리 테이블
 distance = [INF] * (n+1)
