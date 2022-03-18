@@ -33,7 +33,10 @@ for i in range(e):
         union_parent(parent, a, b)
 
 
+print(parent)
+
 if cycle:
     print("사이클")
 else:
     print("사이클 x")
+
