@@ -23,9 +23,9 @@
 
 # 모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.
 
+################# 내 답안 ##################
 
 import heapq
-
 
 def solution(scoville, K):
     answer = 0
@@ -33,14 +33,25 @@ def solution(scoville, K):
     for i in scoville:
         heapq.heappush(q, i)
         
-    while q:
-        
+    for _ in range(len(scoville)-1):
         i = heapq.heappop(q)
+        
+        # 가장 작은 스코빌 지수가 7 이상이면 return.
+        if i >= K:
+            return answer
+        
+        # 두번째로 작은 스코빌 지수 음식 뽑기
         j = heapq.heappop(q)
         
+        # 음식 섞기
         new = i + 2*j
-        answer += 1
+    
+        # 섞인 음식 넣기
         heapq.heappush(q, new)
-        
-        
-    return answer
+        answer += 1
+      
+    # K 이상으로 만들수 없는 경우
+    if heapq.heappop(q) < K:
+        return -1
+    else:
+        return answer
