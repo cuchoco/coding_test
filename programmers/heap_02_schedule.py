@@ -39,7 +39,6 @@
 # 2ms 시점에 6ms 걸리는 작업 요청이 들어옵니다.
 
 
-from collections import deque
 from heapq import heapify, heappop, heappush
 
 def solution(jobs):
@@ -50,28 +49,30 @@ def solution(jobs):
     
     for request, time in jobs:
         
-        # 요청시간이 완료시간보다 낮으면 스케쥴에 추가.
+        # 요청시간이 완료시간보다 먼저라면 스케쥴에 추가.
         if request <= now:
             heappush(schedule,[time, request]) 
-            continue
         
+        # 요청시간이 완료시간 이후인 경우.
         else:
-            # 만약 스케쥴 없으면 하나 처리
+            # 만약 스케쥴 없으면 요청 처리
             if not schedule:
                 now = request
                 now += time
                 answer.append(now-request)
             else:
-                # 스케쥴을 처리하고 요청을 힙에 삽입            
+                # 스케쥴을 하나 처리하고 요청을 힙에 삽입            
                 t, r = heappop(schedule)
                 now += t
                 answer.append(now-r)
-                
                 heappush(schedule,[time, request])
+                
                 
     # 남은 요청 처리
     while schedule:
         t, r = heappop(schedule)
+        if r > now:
+            now =r
         now += t
         answer.append(now-r)
         
