@@ -5,6 +5,8 @@
 # 최소시간: 1번:30  2번:20  3번:70번 (30+40)
 
 # N개의 강의가 주어졌을때 수강에 걸리는 최소시간을 출력하라.
+from collections import deque
+import copy
 
 N = 5 
 data = [
@@ -16,23 +18,38 @@ data = [
 ]
 
 
-graph = [[] for i in range(N+1)]
-
-indegree = [0] * (N+1)
+graph = [[] for i in range(N+1)]  
 time = [0] * (N+1)
+indegree = [0] * (N+1)
 
-for i in range(len(data)):
-    inform = data[i]
-    time[i+1] = inform[0]
-    for j in inform[1:-1]:
-        indegree[j] += 1
-        graph[i+1].append(j)
+for i in range(1, N+1):
+    time[i] = data[i-1][0]
+    for j in data[i-1][1:-1]:
+        graph[j].append(i)
+        indegree[i] += 1
 
-def solution():
+
+
+def solution(indegree):
+    q = deque()
+    result = copy.deepcopy(time)
     
 
+    for i in range(1, N+1):
+        if indegree[i] == 0:
+            q.append(i)           # 2 만 추가.
 
-    
-    return indegree
+    while q:
+        
+        now = q.popleft()    # 2가 뽑힘
+        for i in graph[now]:
+            result[i] = max(result[i], result[now]+time[i])
+            indegree[i] -= 1
+            if indegree[i] == 0:
+                q.append(i)
+        
+    return result
 
-print(solution(data))
+print(graph, indegree, time)
+print()
+print(solution(indegree))
