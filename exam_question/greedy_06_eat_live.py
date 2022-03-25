@@ -28,6 +28,7 @@ import heapq
 def solution(food_times, k):
     if sum(food_times) <= k:
         return -1
+
     # 시간이 적은 음식부터 빼기
     q = []
     for i in range(len(food_times)):
@@ -53,7 +54,7 @@ def solution(ft, k):
     answer = 0
 
     while k > 0 :
-        a = k // (len(ft) - ft.count(0) )
+        a = k // (len(ft) - ft.count(0) )   
         b = k % (len(ft) - ft.count(0) )
 
         for i, j in zip(ft, range(len(ft))):
