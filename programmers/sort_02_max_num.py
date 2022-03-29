@@ -12,3 +12,22 @@
 # numbers	return
 # [6, 10, 2]	"6210"
 # [3, 30, 34, 5, 9]	"9534330"
+
+################################## 내 답안 ###########################################
+
+def solution(numbers):
+    key = lambda x: (str(x)*3, -x)   
+    numbers.sort(key = key, reverse=True)
+    
+    if not any(numbers):
+        return "0"
+    else:
+        return ''.join([str(i) for i in numbers])
+
+
+########################## 1등 답안 ################################
+
+def solution(numbers):
+    numbers = list(map(str, numbers))
+    numbers.sort(key=lambda x: x*3, reverse=True)
+    return str(int(''.join(numbers)))
