@@ -1,3 +1,4 @@
+# 알파벳 오름차순 정렬하고 숫자는 더해서 마지막에 추가
 
 data1 = 'K1KA5CB7'
 data2 = 'AJKDLSI412K4JSJ9D'
