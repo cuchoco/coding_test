@@ -22,10 +22,94 @@
 # s의 길이는 1 이상 1,000 이하입니다.
 # s는 알파벳 소문자로만 이루어져 있습니다.
 # 입출력 예
-# s	result
-# "aabbaccc"	7
-# "ababcdcdababcdcd"	9
-# "abcabcdede"	8
-# "abcabcabcabcdededededede"	14
-# "xababcdcdababcdcd"	17
+#     s	                      result
+# "aabbaccc"	                7
+# "ababcdcdababcdcd"            9
+# "abcabcdede"	                8
+# "abcabcabcabcdededededede"    14
+# "xababcdcdababcdcd"	        17
 
+
+########################## 내 답안 ###########################
+import copy 
+
+def comp(lst):
+    answer = 0
+    result = []
+    num = 1
+    new_lst = copy.deepcopy(lst)
+    while lst:
+        i = lst.pop(0)
+        if not lst:
+            result.append(num)
+            break 
+
+        if i == lst[0]:
+            num +=1
+        else:
+            result.append(num)
+            num =1
+    
+    num = -1
+    for i in result:
+        if i == 1:
+            num += i
+            answer += len(new_lst[num])
+        else:
+            if i >= 10:
+                num += i 
+                answer += len(new_lst[num]) + 2
+            else:
+                num += i
+                answer += len(new_lst[num]) + 1
+                
+    return answer
+            
+
+def solution(s):
+    result = []
+    s = list(s)
+    for i in range(1, len(s)+1):
+        lst = []
+        # 나눠지는 단위로 자르기
+        for j in range(0, len(s), i):
+            lst.append(''.join(s[j:j+i]))
+
+        lst = comp(lst)
+        result.append(lst)
+        
+    return min(result)
+
+
+
+######################### 1등 답안 ###############################
+
+def compress(text, tok_len):
+    words = [text[i:i+tok_len] for i in range(0, len(text), tok_len)]
+    res = []
+    cur_word = words[0]
+    cur_cnt = 1
+    for a, b in zip(words, words[1:] + ['']):
+        if a == b:
+            cur_cnt += 1
+        else:
+            res.append([cur_word, cur_cnt])
+            cur_word = b
+            cur_cnt = 1
+    return sum(len(word) + (len(str(cnt)) if cnt > 1 else 0) for word, cnt in res)
+
+def solution(text):
+    return min(compress(text, tok_len) for tok_len in list(range(1, int(len(text)/2) + 1)) + [len(text)])
+
+a = [
+    "aabbaccc",
+    "ababcdcdababcdcd",
+    "abcabcdede",
+    "abcabcabcabcdededededede",
+    "xababcdcdababcdcd",
+
+    'aaaaaa',
+]
+
+for x in a:
+    print(solution(x))
