@@ -23,77 +23,55 @@
 #                key	                        lock	                result
 # [[0, 0, 0], [1, 0, 0], [0, 1, 1]]	[[1, 1, 1], [1, 1, 0], [1, 0, 1]]	true
 
-def rotate90(lst, counts=1):
+
+
+####################### 내 답안 ##############################
+
+import copy
+
+def rotate90(lst):
     new_lst = [[0]*len(lst) for _ in range(len(lst))]
-    
     for i in range(len(lst)):
         for j in range(len(lst)):
             new_lst[i][j] = lst[len(lst)-1-j][i]
 
-    if counts > 1:
-        new_lst = rotate90(new_lst, 1)    
-        counts -=1
-    if counts == 1:
-        return new_lst
-    if counts == 0:
-        return lst
-
-def pad(lst, N):
-    new_lst = [[0]*N for _ in range(N)]
-    for i in range(len(lst)):
-        for j in range(len(lst)):
-            new_lst[i][j] = lst[i][j]
-
     return new_lst
 
-def move(lst, type, counts=1):
-    N = len(lst)
-    new_lst = [[0]*N for _ in range(N)]
-    if type == 'U':
-        new_lst[:-1] = lst[1:]
-    if type == 'D':
-        new_lst[1:] = lst[:-1]
-    if type == 'L':
-        new_lst[:][:-1] = lst[:][1:]
-    if type == 'R':
-        new_lst[:][1:] = lst[:][:-1]
-
-    if counts > 1:
-        new_lst = move(new_lst, type)    
-        counts -=1
-    if counts == 1:
-        return new_lst
-
-    if counts == 0:
-        return lst
-
-rotation = [0, 1, 2, 3]
-move_type = ['U', 'D', 'L', 'R']
 
 def solution(key, lock):
+    N = len(key)
+    M = len(lock)
+    length = M + 2*(N-1)
+    new_lst = [[0]*length for _ in range(length)]
     
-    M = len(key)
-    N = len(lock)
-    if M < N:
-        key = pad(key, N)
+    for i in range(N-1, N+M-1):
+        for j in range(N-1, N+M-1):
+            new_lst[i][j] = lock[i-N+1][j-N+1]
+    
+    for i in range(M+N-1):
+        
+        for j in range(M+N-1):
+            
+            for _ in range(4):
+                compare_lst = copy.deepcopy(new_lst)
+                key = rotate90(key)
+                answer = 0 
 
-    for rotate in rotation:
-        for up in range(N):
-            for down in range(N):
-                for left in range(N):
-                    for right in range(N):
-                        if all(key + lock):
-                            return True
-
-                        key = rotate90(key, rotate)
-                        key = move(key, 'U', up)
-                        key = move(key, 'D', down)
-                        key = move(key, 'L', left)
-                        key = move(key, 'R', right)
+                for a in range(i, i+N):
+                    for b in range(j, j+N):
+                    
+                        compare_lst[a][b] = compare_lst[a][b] ^ key[a-i][b-j]
                         
-    return False 
+                        
+                for a in range(N-1, N+M-1):
+                    for b in range(N-1, N+M-1):
+                        answer += compare_lst[a][b]
+                        
 
-key = [[0, 0, 0], [1, 0, 0], [0, 1, 1]]
-lock = [[1, 1, 1], [1, 1, 0], [1, 0, 1]]
+                if answer == M*M:
+                    return True
 
-print(solution(key, lock))
+    return False
+
+
+####################### 1등 답안 ###########################
