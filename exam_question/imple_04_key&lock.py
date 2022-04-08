@@ -49,9 +49,7 @@ def solution(key, lock):
             new_lst[i][j] = lock[i-N+1][j-N+1]
     
     for i in range(M+N-1):
-        
         for j in range(M+N-1):
-            
             for _ in range(4):
                 compare_lst = copy.deepcopy(new_lst)
                 key = rotate90(key)
@@ -59,15 +57,12 @@ def solution(key, lock):
 
                 for a in range(i, i+N):
                     for b in range(j, j+N):
-                    
                         compare_lst[a][b] = compare_lst[a][b] ^ key[a-i][b-j]
-                        
                         
                 for a in range(N-1, N+M-1):
                     for b in range(N-1, N+M-1):
                         answer += compare_lst[a][b]
                         
-
                 if answer == M*M:
                     return True
 
