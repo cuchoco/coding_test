@@ -22,10 +22,44 @@ apple = [[3,4],[2,5],[5,3]]  # 1행 1열이 시작.
 data = [[3, 'D'], [15, 'L'], [17, 'D']] 
 
 def solution():
+    info = []
     board = [[0]*N for _ in range(N)]
-    head = ['L','R','U','D']
-    board[0][0] = 1
-    
-    return  
+    now = (0,0)
+    board[now[0]][now[1]] = 1
+    info.append((now[0], now[1]))
+    length = 1
 
-print(solution())
+    heads = ['L','R','U','D']
+    head = 'R'
+    time = 0 
+
+    while True:
+        time += 1
+        if head == 'R':
+            now = (now[0], now[1]+1)
+        if head == 'L':
+            now = (now[0], now[1]-1)
+        if head == 'U':
+            now = (now[0]-1, now[0])
+        if head == 'D':
+            now = (now[0]+1, now[0])
+
+        if now[0] < 0 or now[0] > N-1 or now[1] < 0 or now[1] > N-1 or board[now[0]][now[1]] == 1:
+            break
+        else:
+            board[now[0]][now[1]] = 1
+            info.append((now[0]), now[1])
+            if apple:
+                if [now[0]+1, now[1]+1] in apple:
+                    length += 1
+                    apple.remove((now[0],now[1]))
+
+            if len(info) > length:
+                i, j = info.pop(0)
+                board[i][j] = 0
+
+
+    return time
+
+
+    
