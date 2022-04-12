@@ -15,21 +15,30 @@
 # X는 10,000 이하의 양의 정수이며, 방향 전환 정보는 X가 증가하는 순으로 주어진다.
 
 
-N = 6   # 보드의 크기 
-K = 3   # 사과의 개수
-L = 3   # 뱀의 방향 변환 횟수
-apple = [[3,4],[2,5],[5,3]]  # 1행 1열이 시작.
-data = [[3, 'D'], [15, 'L'], [17, 'D']] 
+apple = []  # 1행 1열이 시작.
+data = []
+
+N = int(input())
+K = int(input())
+
+for _ in range(K):
+    apple.append(list(map(int, input().split())))
+
+L = int(input())
+
+for _ in range(L):
+    n, d = list(input().split())
+    data.append([int(n),d])
 
 def solution():
     info = []
     board = [[0]*N for _ in range(N)]
     now = (0,0)
     board[now[0]][now[1]] = 1
-    info.append((now[0], now[1]))
+    info.append([now[0], now[1]])
     length = 1
 
-    heads = ['L','R','U','D']
+    heads = ['R','D','L','U']
     head = 'R'
     time = 0 
 
@@ -48,18 +57,26 @@ def solution():
             break
         else:
             board[now[0]][now[1]] = 1
-            info.append((now[0]), now[1])
+            info.append([now[0], now[1]])
             if apple:
                 if [now[0]+1, now[1]+1] in apple:
                     length += 1
-                    apple.remove((now[0],now[1]))
+                    apple.remove([now[0]+1,now[1]+1])
 
             if len(info) > length:
                 i, j = info.pop(0)
                 board[i][j] = 0
 
+            if data:
+                if time == data[0][0]:
+                    if data[0][1] == 'L':
+                        head = heads[heads.index(head) - 1]
+                    else:
+                        head = heads[heads.index(head) + 1]
+                    data.pop(0)
 
     return time
 
 
+print(solution())
     
