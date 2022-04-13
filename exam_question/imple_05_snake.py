@@ -15,7 +15,7 @@
 # X는 10,000 이하의 양의 정수이며, 방향 전환 정보는 X가 증가하는 순으로 주어진다.
 
 
-apple = []  # 1행 1열이 시작.
+apple = []  
 data = []
 
 N = int(input())
@@ -29,9 +29,6 @@ L = int(input())
 for _ in range(L):
     n, d = list(input().split())
     data.append([int(n),d])
-
-print('data:{}'.format(data))
-
 
 def solution():
     info = []
@@ -58,6 +55,7 @@ def solution():
 
         if now[0] < 0 or now[0] > N-1 or now[1] < 0 or now[1] > N-1 or board[now[0]][now[1]] == 1:
             break
+
         else:
             board[now[0]][now[1]] = 1
             info.append([now[0], now[1]])
@@ -75,11 +73,9 @@ def solution():
                 if time == data[0][0]:
                     if data[0][1] == 'L':
                         head = heads[(heads.index(head) - 1) % 4]
-                    elif data[0][1] == 'D':
+                    else:
                         head = heads[(heads.index(head) + 1) % 4]
                     data.pop(0)
-            
-            print(info)
 
     return time
 
