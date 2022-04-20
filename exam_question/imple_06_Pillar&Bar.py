@@ -45,4 +45,9 @@ for data in build_frame:
         if a == 0: # 기둥 삭제
 
             # 기둥 삭제 조건
-            if frame[n-x-1][y] == 1
+            if frame[n-x-1][y] == 1 or frame[n-x-1][y] == 0:
+                pass
+
+            else:
+                frame[n-x][y] = -1
+                
