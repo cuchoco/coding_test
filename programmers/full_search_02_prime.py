@@ -31,8 +31,10 @@ def prime_number(x):
     
     answer = 0
     for i in range(1,int(x**0.5)+1):
-        if x%i==0:
+
+        if x % i==0:
             answer+=1
+            
     return True if answer==1 else False
 
 def solution(numbers):
