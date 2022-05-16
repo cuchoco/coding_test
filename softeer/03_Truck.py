@@ -18,57 +18,49 @@
 # 5 8 9 9 10 11 -1 3 3 5 5
 
 
-n = int(input())
-proposals = []
-sizes = set()
+numBuyer = int(input())
+offer = []   # [size, payment, buyerID]
 
-for i in range(n):
-    data = list(map(int,input().split(' ')))
-    temp = []
-    for j in range(1, len(data), 2):
-        temp.append((data[j], data[j+1]))
-        sizes.add(data[j])
-    temp.sort(key=lambda x:x[0])
-    proposals.append(temp)
+for i in range(numBuyer):
+    temp = list(map(int, input().split()))
+    for j in range(temp[0]):
+        offer.append([temp[2*j+1], temp[2*j+2], i+1])
 
+numScenario = int(input())
+temp = list(map(int, input().split()))
+scenario = [] # [target_revenue, targetID, size(answer)]
 
-# 1 3 5 8 9 10 11 인 경우만 확인
-sizes = list(sizes)
-sizes.sort()
+for i in range(numScenario):
+    scenario.append([temp[i], i+1])
 
-sales = []
-for size in sizes:
-    sale = 0
-    for proposal in proposals:
-        max_sale = 0
-        for i in range(len(proposal)):
-            if size >= proposal[i][0]:
-                if proposal[i][1] > max_sale:
-                    max_sale = proposal[i][1]    
+offer.sort() #size
+scenario.sort() #target_revenue
 
-        sale += max_sale
-    sales.append(sale)
+# print(offer)
+# print(scenario)
 
-
-n_price = int(input())
-prices = list(map(int,input().split(' ')))
-
-answer = []
-for i in range(len(prices)):
-    for j in range(len(sales)):
-        if sales[j] >= prices[i]:
-            idx = j
-            break
-        else:
-            idx = -1
+revenue = 0
+buyerPayment = [0] * (numBuyer+1)
+sIndex = 0
+for i in range(len(offer)):
+    size = offer[i][0]
+    payment = offer[i][1]
+    buyerID = offer[i][2]
+    if payment > buyerPayment[buyerID]:
+        revenue += -buyerPayment[buyerID] + payment
+        buyerPayment[buyerID] = payment
     
-    if idx == -1:
-        answer.append(-1)
-    else:
-        answer.append(sizes[idx])
+    while (sIndex < numScenario and scenario[sIndex][0] <= revenue):
+        scenario[sIndex].append(size)
+        sIndex += 1
+        
+scenario.sort(key=lambda x:x[1])
 
-for i in answer:
-    print(i, end=' ')
+for i in scenario:
+    if len(i) == 2:
+        print(-1, end=' ')
+    else:
+        print(i[2], end=' ')
     
 
 
