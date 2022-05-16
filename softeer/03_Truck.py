@@ -46,6 +46,7 @@ for i in range(len(offer)):
     size = offer[i][0]
     payment = offer[i][1]
     buyerID = offer[i][2]
+
     if payment > buyerPayment[buyerID]:
         revenue += -buyerPayment[buyerID] + payment
         buyerPayment[buyerID] = payment
@@ -53,14 +54,15 @@ for i in range(len(offer)):
     while (sIndex < numScenario and scenario[sIndex][0] <= revenue):
         scenario[sIndex].append(size)
         sIndex += 1
-        
+
+while (sIndex < numScenario):
+    scenario[sIndex].append(-1)
+    sIndex += 1
+
 scenario.sort(key=lambda x:x[1])
 
 for i in scenario:
-    if len(i) == 2:
-        print(-1, end=' ')
-    else:
-        print(i[2], end=' ')
+   print(i[2], end=' ')
     
 
 
