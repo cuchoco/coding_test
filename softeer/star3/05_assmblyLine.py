@@ -33,19 +33,19 @@ for i in range(0,len(info),2):
         graph[i+1].append((i+3, A))      # (3 > 5)
         graph[i+2].append((i+4, B))        # (4 > 6)
 
-        graph[i+1].append((i+4, B+ AtoB)) # A to B (3 > 6)
-        graph[i+2].append((i+3, A+ BtoA))
+        graph[i+1].append((i+4, B+AtoB)) # A to B (3 > 6)
+        graph[i+2].append((i+3, A+BtoA))
 
 
 def dijkstra(start):
     q = []
 
-    # 시작 노드로 가기 위한 최단 경로는 0으로 설정해 큐에 삽입.
+    # 시작 노드로 거리 0
     heapq.heappush(q,(0,start))
     distance[start] = 0
 
     while q:
-        # 가장 최단 거리가 짧은 노드에 대한 정보 꺼내기
+        # 최단거리 노드의 정보
         dist, now = heapq.heappop(q)
 
         # 현재 노드가 처리된 적이 있는 노드라면 무시
