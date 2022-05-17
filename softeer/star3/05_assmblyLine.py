@@ -62,8 +62,6 @@ def dijkstra(start):
                 heapq.heappush(q, (cost, i[0]))
 
 
-print(graph)
-
 # 1,2 에서 2N+1, 2N+2 의 최단거리중 최소
 distance = [1e9] * len(graph)
 dijkstra(1)
