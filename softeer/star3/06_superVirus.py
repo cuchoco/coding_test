@@ -10,6 +10,6 @@ def function(P, N):
         b = function(P, (N-1)/2)
         return b*b*P % 1000000007
 
-answer = (K*function(P, N)) % 1000000007
+answer = (K*function(P, 10*N)) % 1000000007
 
 print(answer)
