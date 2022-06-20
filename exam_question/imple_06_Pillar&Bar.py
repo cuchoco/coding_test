@@ -13,41 +13,41 @@
 # 1. 기둥은 바닥 위에 있거나 보의 한쪽 끝 부분 위에 있거나, 또는 다른 기둥 위에 있어야 합니다.
 # 2. 보는 한쪽 끝 부분이 기둥 위에 있거나, 또는 양쪽 끝 부분이 다른 보와 동시에 연결되어 있어야 합니다.
 
+
 n = 5  #벽면의 크기
 build_frame = [[1,0,0,1],[1,1,1,1],[2,1,0,1],[2,2,1,1],      # [가로좌표, 세로좌표, (0 기둥, 1 보), (0 삭제, 1 설치)]
                [5,0,0,1],[5,1,0,1],[4,2,1,1],[3,2,1,1]]      # 기둥은 위쪽방향으로 설치, 보는 오른쪽 방향으로 설치
 
-frame = [[-1]*(n+1) for _ in range(n+1)]
+def possible(answer):
+    for x, y, stuff in answer:
+        if stuff == 0:   # 설치된 것이 기둥인 경우
+            # '바닥위' '보의 한쪽 끝부분위' '다른 기둥위'
+            if y == 0 or [x-1, y, 1] in answer or [x, y, 1] in answer or [x, y-1, 0] in answer:
+                continue
+            return False
+        elif stuff == 1:  # 설치된 것이 보인 경우
+            # '한쪽 끝 부분이 기둥위' '양쪽 끝부분이 다른 보와 동시에 연결'
+            if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
+                continue
+            return False
+    return True
 
-# (x, y) -> (n-x, y) 
 
-for data in build_frame:
-    x, y, a, b = data
-    
-    # 설치 하는 경우
-    if b == 1:
-        if a == 0: # 기둥 설치
+def solution(n, build_frame):
+    answer = []
+    for frame in build_frame:
+        x, y, stuff, operate = frame
+        if operate == 0: # 삭제하는 경우
+            answer.remove([x, y, stuff])   # 일단 제거
+            if not possible(answer):       # 가능하지 않다면
+                answer.append([x,y,stuff]) # 다시 설치
 
-            # 기둥 설치 조건
-            if x == 0 or frame[n-x][y] == 1 or frame[n-x][y] == 0:
-                frame[n-x][y] = 1
-                frame[n-x-1][y] = 1
+        elif operate == 1:  # 설치하는경우
+            answer.append([x, y, stuff])     # 일단 설치
+            if not possible(answer):         # 가능하지 않다면
+                answer.remove([x, y, stuff]) # 다시 제거
 
-        else: # 보 설치
+    return sorted(answer)
 
-            # 보 설치 조건
-            if ( frame[n-x][y] == 0 or frame[n-x][y+1] == 0 ) or ( frame[n-x][y] == 1 and frame[n-x][y+1] ==1 ):
-                frame[n-x][y] = 0
-                frame[n-x][y+1] = 0
-    
-    # 삭제 하는 경우
-    else:
-        if a == 0: # 기둥 삭제
 
-            # 기둥 삭제 조건
-            if frame[n-x-1][y] == 1 or frame[n-x-1][y] == 0:
-                pass
-
-            else:
-                frame[n-x][y] = -1
-                
+print(solution(n, build_frame))
