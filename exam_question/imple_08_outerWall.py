@@ -28,3 +28,36 @@
 # 12	[1, 5, 6, 10]	[1, 2, 3, 4]	2
 # 12	[1, 3, 4, 9, 10]	[3, 5, 7]	1
 
+
+from itertools import permutations
+n = 12
+weak = [1, 5, 6, 10]
+dist = [1, 2, 3, 4]
+
+
+def solution(n, weak, dist):
+    length = len(weak)
+    weak = weak + [i + n for i in weak]  # 2배로 늘리기
+    answer = len(dist) + 1  # 초기화
+    
+    # 시작지점 별로 확인
+    for start in range(length):
+        # 친구를 나열하는 경우의 수 
+        for friends in list(permutations(dist, len(dist))):
+            count = 1 # 투입하는 친구의 수
+            # 해당 친구가 점검 할수 있는 마지막 위치
+            position = weak[start] + friends[count -1]
+            # 시작점부터 모든 취약 지점 확인
+            for index in range(start, start + length):
+                # 점검할 수 있는 위치를 벗어나는 경우
+                if position < weak[index]:
+                    count += 1
+                    if count > len(dist): # 더 투입이 불가능 하다면 종료
+                        break
+                    position = weak[index] + friends[count - 1]
+            answer = min(answer, count)
+    if answer > len(dist):
+        return -1
+    return answer
+
+print(solution(n, weak, dist))
