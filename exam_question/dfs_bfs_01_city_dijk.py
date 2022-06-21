@@ -1,18 +1,16 @@
 # n개 도시 m개 도로 도로 거리는 1
 # 도시 x 로부터 출발해 최단거리가 정확히 k인 도시의 번호를 출력
 import heapq
+import sys
+f = sys.stdin.readline
 
-n, m, k, x = list(map(int, input().split()))
-data = []
-for i in range(m):
-    temp = list(map(int, input().split()))
-    data.append(temp+[1])
-
+n, m, k, x = list(map(int, f().split()))
+graph = [[] for _ in range(n+1)] 
 distance = [1e9] * (n+1)
-graph = [[] for _ in range(n+1)]
 
-for i,j,c in data:
-    graph[i].append((j, c))
+for i in range(m):
+    a, b = list(map(int, f().split()))
+    graph[a].append((b, 1))
 
 def dijkstra(start):
     q = []
@@ -36,17 +34,14 @@ def dijkstra(start):
 dijkstra(x)
 
 answer = []
-
 for i in range(len(distance)):
     if distance[i] == k:
         answer.append(i)
 
-answer.sort()
-
 if answer:
+    answer.sort()
     for i in answer:
         print(i)
-
 else:
     print(-1)
 
