@@ -4,8 +4,7 @@ def solution(rows, cols, queries):
     mat = [[i + cols*j for i in range(1, cols+1)] for j in range(rows)]
     answer = []
     
-    for query in queries:
-        r_1, c_1, r_2, c_2 = query
+    for r_1, c_1, r_2, c_2 in queries:
         r_min, c_min, r_max, c_max = r_1 - 1, c_1 - 1, r_2 - 1, c_2 - 1
 
         coordinates = []
@@ -42,8 +41,7 @@ def solution(rows, cols, queries):
     mat = [[i + cols*j for i in range(1, cols+1)] for j in range(rows)]
     answer = []
     
-    for query in queries:
-        r_1, c_1, r_2, c_2 = query
+    for r_1, c_1, r_2, c_2 in queries:
         r_min, c_min, r_max, c_max = r_1 - 1, c_1 - 1, r_2 - 1, c_2 - 1
 
         coordinates = []
