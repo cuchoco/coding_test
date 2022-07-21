@@ -28,14 +28,12 @@ from itertools import permutations
 def prime_number(x):
     if x == 1:
         return False
-    
-    answer = 0
-    for i in range(1,int(x**0.5)+1):
-
+        
+    for i in range(2, int(x**0.5)+1):
         if x % i == 0:
-            answer += 1
-
-    return True if answer == 1 else False
+            return False
+        
+    return True
 
 def solution(numbers):
     result = 0
